@@ -1,3 +1,47 @@
+# Task 7 - Library
+Implement a simple application to keep track of books. The application will list books from a JSON file and will be able to list all books by the selected author 
+and all books published in the specified year.
+
+You don't have to follow the exact order of the steps below - for example, it may be useful to write a test before or in parallel with the implementation 
+of the ncode it will test.
+
+1. The application will contain only two more classes, `Book`  and `BookService`, in addition to the `Application` class. Therefore, create both new classes directly 
+in package `cz.czechitas.ukol07`.
+1. The `Book` class will be a JavaBean and will represent a single book. Take a look at the JSON structure of `src/main/resources/cz/czechitas/ukol07/knihy.json` 
+and follow the structure of the class (properties) with the JSON structure of the file.
+2. In the `BookService` class, the field will be of type `List<Book>`. Populate the contents of this file in the class constructor. Use `ObjectMapper` to retrieve it. 
+   1. To load, use an `InputStream`, which you create by calling `BookService.class.getResourceAsStream("books.json")`. This will load the books.json file, 
+   which is stored in `src/main/java` in the same package as the `BookService` class. Remember that the `InputStream` must be closed when finished - use 
+   the `try-with-resources` construct.
+   1. To load the `List` itself, use the following construct:
+       ```java
+       objectMapper.readValue(inputStream, new TypeReference<List<Book>>(){})
+       ```
+      The code `objectMapper.readValue(inputStream, List<Book>.class)` cannot be used for historical reasons. If you need to read a collection or any other
+      generic type, you need to use a construct with the `TypeReference` class.
+1. In the `BookService` class, create an appropriately named method that returns a list (`List`) of all books.
+1. In the `BookService` class, create a suitably named method that returns a list (`List`) of all books by the specified author (the author's name will be the method parameter).
+   The returned list can be empty.
+1. In the `BookService` class, create a suitably named method that returns a list (`List`) of all books published in the specified year (the year is the method parameter).
+   The returned list can be empty.
+1. Write tests for the methods in the `BookService` class. Don't forget to test the edge cases - the method for selecting books by author or ork will not return any book
+   or returns multiple books.
+1. In the Application class, create a `main` trigger method. In this method, create an instance of the `BookService` class.
+1. Print the total number of books in our small database to the console (using `System.out`).
+1. List in the console the names of all the books written by Karel Čapek.
+1. List all the books first published in 1845. The listing will be in the form *author name: book title*.
+
+## Bonus
+
+1. As a bonus, you can validate the values passed to the setters of the `Book` class. If the parameter is incorrect, it is useful to throw an `IllegalArgumentException` exception:
+    1. The author name should not be empty (`null` or an empty String).
+    1. The book title should not be empty (`null` or an empty String).
+    1. We will only consider printed books, so the year of publication should not be earlier than the invention of the printing press - use 1440 as the cutoff year.
+1. Implement tests on the validations implemented in the setters - i.e. whether correct values pass and incorrect ones fail (throw an exception).
+
+
+
+
 # Úkol 7 – Knihovna
 
 Implementujte jednoduchou aplikaci pro evidenci knížek. Aplikace nače seznam knížek z JSON souboru a bude umět vypsat všechny knížky od zvoleného autora a také
