@@ -5,22 +5,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 public class BookService {
-
     private List<Book> listOfBooks;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public BookService(List<Book> listOfBooks) {
         this.listOfBooks = listOfBooks;
     }
+    public BookService() {
+    }
 
-    //
-    //
+    public List<Book> getListOfBooks() {
+        return listOfBooks;
+    }
+    public void setListOfBooks(List<Book> listOfBooks) {
+        this.listOfBooks = listOfBooks;
+    }
+
+
     public void loadBooksFromFile() {
         try {
             InputStream inputStream = BookService.class.getResourceAsStream("knihy.json");
@@ -32,5 +36,25 @@ public class BookService {
         }
     }
 
+public List<Book> getListOfAllBooks(){
+        return listOfBooks;
+}
 
+public List<Book>getListOfBooksFromGivenAuthor(String author) {
+        return listOfBooks.stream()
+            .filter(book -> book.getAuthor().equals(author))
+            .toList();
+}
+
+public List<Book>getBooksOfGivenYear(int yearOfPublication){
+return listOfBooks.stream()
+        .filter(book -> book.getYearOfPublication()==yearOfPublication)
+        .toList();
+}
+    @Override
+    public String toString() {
+        return "BookService{" +
+                "list of all books=" + listOfBooks +
+                '}';
+    }
 }

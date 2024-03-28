@@ -12,6 +12,8 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
+    public Book() {
+    }
 
     public String getAuthor() {
         return author;
@@ -41,7 +43,7 @@ public class Book {
         return "Book{" +
                 "author='" + author + '\'' +
                 ", title='" + title + '\'' +
-                ", yearOfPublication=" + yearOfPublication +
+                ", year of publication=" + yearOfPublication +
                 '}';
     }
 

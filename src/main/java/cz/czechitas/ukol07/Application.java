@@ -5,6 +5,7 @@ package cz.czechitas.ukol07;
  */
 public class Application {
     public static void main(String[] args) {
+BookService bookService = new BookService();
 
     }
 
