@@ -20,7 +20,13 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        //bonus
+        if (author == null) {
+            throw new IllegalArgumentException("author value is null value");
+        } else if (author.isEmpty()) {
+            throw new IllegalArgumentException(("author value is empty"));
+        } else
+            this.author = author;
     }
 
     public String getTitle() {
@@ -28,7 +34,12 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if (title == null) {
+            throw new IllegalArgumentException("title value is null value");
+        } else if (title.isEmpty()) {
+            throw new IllegalArgumentException(("title value is empty"));
+        } else
+            this.title = title;
     }
 
     public int getYearOfPublication() {
@@ -36,8 +47,12 @@ public class Book {
     }
 
     public void setYearOfPublication(int yearOfPublication) {
+        if (yearOfPublication > 1440) {
+            throw new IllegalArgumentException("the year of publication is not valid");
+        }
         this.yearOfPublication = yearOfPublication;
     }
+
     @Override
     public String toString() {
         return "Book{" +
