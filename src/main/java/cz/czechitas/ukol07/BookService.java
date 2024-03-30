@@ -9,48 +9,51 @@ import java.util.List;
 
 public class BookService {
     private List<Book> listOfBooks;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public BookService(List<Book> listOfBooks) {
         this.listOfBooks = listOfBooks;
     }
+
     public BookService() {
     }
 
     public List<Book> getListOfBooks() {
         return listOfBooks;
     }
+
     public void setListOfBooks(List<Book> listOfBooks) {
-        this.listOfBooks = listOfBooks;
-    }
-
-
-    public void loadBooksFromFile() {
-        try {
-            InputStream inputStream = BookService.class.getResourceAsStream("knihy.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream inputStream = BookService.class.getResourceAsStream("knihy.json")) {
             listOfBooks = objectMapper.readValue(inputStream, new TypeReference<List<Book>>() {
             });
         } catch (IOException e) {
             System.out.println("ERR: The file has not been found.");
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            System.out.println("ERR:List of books is null value.");
+            throw new RuntimeException(e);
         }
+        this.listOfBooks = listOfBooks;
     }
 
-public List<Book> getListOfAllBooks(){
+
+    public List<Book> getListOfAllBooks() {
         return listOfBooks;
-}
+    }
 
-public List<Book>getListOfBooksFromGivenAuthor(String author) {
+    public List<Book> getBooksFromGivenAuthor(String author) {
         return listOfBooks.stream()
-            .filter(book -> book.getAuthor().equals(author))
-            .toList();
-}
+                .filter(book -> book.getAuthor().equals(author))
+                .toList();
+    }
 
-public List<Book>getBooksOfGivenYear(int yearOfPublication){
-return listOfBooks.stream()
-        .filter(book -> book.getYearOfPublication()==yearOfPublication)
-        .toList();
-}
+
+    public List<Book> getBooksOfGivenYear(int yearOfPublication) {
+        return listOfBooks.stream()
+                .filter(book -> book.getYearOfPublication() == yearOfPublication)
+                .toList();
+    }
+
     @Override
     public String toString() {
         return "BookService{" +
