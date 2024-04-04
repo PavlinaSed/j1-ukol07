@@ -1,7 +1,5 @@
 package cz.czechitas.ukol07;
 
-import java.util.List;
-
 /**
  * Spouštěcí třída aplikace
  */
@@ -12,13 +10,13 @@ public class Application implements Runnable {
 
     @Override
     public void run() {
-        BookService bookService = new BookService();
         BookService listOfBooks = new BookService();
-        System.out.println("The count of all books =" + listOfBooks.getListOfAllBooks().size());
+        System.out.println("The count of all books =" + listOfBooks.getListOfAllBooks().size() + "\n");
 
-        List<Book> booksFromKarelCapek = listOfBooks.getBooksFromGivenAuthor("Karel Čapek");
-        System.out.println(booksFromKarelCapek);
+        System.out.println("Titles of books written by Karel Čapek:");
+        listOfBooks.getBooksFromGivenAuthor("Karel Čapek").forEach(book -> System.out.println(book.getTitle()));
 
+        System.out.println("\nBooks printed in 1845:");
         listOfBooks.getBooksOfGivenYear(1845).forEach(book -> System.out.println(book.getAuthor() + ":" + book.getTitle()));
     }
 }

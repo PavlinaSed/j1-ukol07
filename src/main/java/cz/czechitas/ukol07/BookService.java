@@ -15,6 +15,14 @@ public class BookService {
     }
 
     public BookService() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream inputStream = BookService.class.getResourceAsStream("knihy.json")) {
+            listOfBooks = objectMapper.readValue(inputStream, new TypeReference<>() {
+            });
+        } catch (IOException e) {
+            System.out.println("ERR: The file has not been found.");
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Book> getListOfBooks() {
@@ -22,20 +30,8 @@ public class BookService {
     }
 
     public void setListOfBooks(List<Book> listOfBooks) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream inputStream = BookService.class.getResourceAsStream("knihy.json")) {
-            listOfBooks = objectMapper.readValue(inputStream, new TypeReference<List<Book>>() {
-            });
-        } catch (IOException e) {
-            System.out.println("ERR: The file has not been found.");
-            throw new RuntimeException(e);
-        } catch (NullPointerException e) {
-            System.out.println("ERR:List of books is null value.");
-            throw new RuntimeException(e);
-        }
         this.listOfBooks = listOfBooks;
     }
-
 
     public List<Book> getListOfAllBooks() {
         return listOfBooks;
@@ -47,7 +43,6 @@ public class BookService {
                 .toList();
     }
 
-
     public List<Book> getBooksOfGivenYear(int yearOfPublication) {
         return listOfBooks.stream()
                 .filter(book -> book.getYearOfPublication() == yearOfPublication)
@@ -56,8 +51,8 @@ public class BookService {
 
     @Override
     public String toString() {
-        return "BookService{" +
-                "list of all books=" + listOfBooks +
-                '}';
+        return "BookService:" +
+                "list of all books =" + listOfBooks
+                ;
     }
 }

@@ -47,7 +47,7 @@ public class Book {
     }
 
     public void setYearOfPublication(int yearOfPublication) {
-        if (yearOfPublication > 1440) {
+        if (yearOfPublication < 1440) {
             throw new IllegalArgumentException("the year of publication is not valid");
         }
         this.yearOfPublication = yearOfPublication;
@@ -55,11 +55,10 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", year of publication=" + yearOfPublication +
-                '}';
+        return "Book: " +
+                "author ='" + author + '\'' +
+                ", title ='" + title + '\'' +
+                ", year of publication =" + yearOfPublication
+                ;
     }
-
 }
